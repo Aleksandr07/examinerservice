@@ -8,10 +8,11 @@ import pro.sky.java.course2.examinerservice.repository.QuestionRepository;
 import java.util.*;
 
 @Service
-public class JavaQuestionService implements QuestionService{
+public class MathQuestionService implements QuestionService{
+
     private final QuestionRepository questionsStorage;
 
-    public JavaQuestionService(@Qualifier("javaQuestionRepository") QuestionRepository questionsStorage) {
+    public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository questionsStorage) {
         this.questionsStorage = questionsStorage;
     }
 
@@ -19,11 +20,13 @@ public class JavaQuestionService implements QuestionService{
     public Question add(String question, String answer) {
         Question newQuestion = new Question(question, answer);
         return questionsStorage.add(newQuestion);
+
     }
 
     @Override
     public Question add(Question question) {
         return questionsStorage.add(question);
+
     }
 
     @Override
@@ -43,5 +46,4 @@ public class JavaQuestionService implements QuestionService{
         List<Question> questionList = new ArrayList<>(questionsStorage.getAll());
         return questionList.get(random.nextInt(questionsStorage.getAll().size()));
     }
-
 }

@@ -1,13 +1,12 @@
 package pro.sky.java.course2.examinerservice.service;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pro.sky.java.course2.examinerservice.exceptions.QuestionsStorageOutOfBoundsException;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,17 +19,30 @@ class ExaminerServiceImplTest {
     @Mock
     private JavaQuestionService javaQuestionService;
 
-    @InjectMocks
+    @Mock
+    private MathQuestionService mathQuestionService;
+
+
     private ExaminerServiceImpl examinerService;
+
+    @BeforeEach
+    public void initOut() {
+        examinerService = new ExaminerServiceImpl(javaQuestionService, mathQuestionService);
+    }
+
     @Test
     void getQuestions() {
         when(javaQuestionService.getAll()).thenReturn(QUESTION_SET);
-        when(javaQuestionService.getRandomQuestion()).thenReturn(QUESTION_1);
-        assertIterableEquals(QUESTION_SET_ONE_QUESTION, examinerService.getQuestions(1));
+        when(mathQuestionService.getAll()).thenReturn(QUESTION_SET);
+        when(javaQuestionService.getRandomQuestion()).thenReturn(QUESTION_1, QUESTION_2, QUESTION_3);
+        when(mathQuestionService.getRandomQuestion()).thenReturn(QUESTION_1, QUESTION_2, QUESTION_3);
+        assertEquals(QUESTION_SET, examinerService.getQuestions(3));
     }
 
     @Test
     void shouldThrowQuestionStorageOutOfBoundsException() {
-        assertThrows(QuestionsStorageOutOfBoundsException.class, () -> examinerService.getQuestions(4));
+        when(javaQuestionService.getAll()).thenReturn(QUESTION_SET);
+        when(mathQuestionService.getAll()).thenReturn(QUESTION_SET);
+        assertThrows(QuestionsStorageOutOfBoundsException.class, () -> examinerService.getQuestions(7));
     }
 }

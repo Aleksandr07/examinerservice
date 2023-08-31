@@ -6,20 +6,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pro.sky.java.course2.examinerservice.exceptions.NotFoundException;
-import pro.sky.java.course2.examinerservice.repository.JavaQuestionRepository;
+import pro.sky.java.course2.examinerservice.repository.MathQuestionRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static pro.sky.java.course2.examinerservice.constants.TestConstants.*;
 
 @ExtendWith(MockitoExtension.class)
-class JavaQuestionServiceTest {
-
+public class MathQuestionServiceTest {
     @Mock
-    private JavaQuestionRepository questionRepository;
+    private MathQuestionRepository questionRepository;
 
     @InjectMocks
-    private JavaQuestionService questionService;
+    private MathQuestionService questionService;
 
     @Test
     void add() {
